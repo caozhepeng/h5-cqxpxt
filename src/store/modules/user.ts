@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { createStorage } from '@/utils/Storage'
 import { store } from '@/store'
-import { ACCESS_TOKEN, CURRENT_USER } from '@/store/mutation-types'
+import { KEY_ACCESS_TOKEN, KEY_CURRENT_USER } from '@/store/mutation-types'
 import { ResultEnum } from '@/enums/httpEnum'
 import { doLogout, getUserInfo, login } from '@/api/system/user'
 import { PageEnum } from '@/enums/pageEnum'
@@ -29,8 +29,10 @@ interface IUserState {
 }
 
 interface LoginParams {
-  username: string
-  password: string
+  code: string;
+  password: string;
+  versionCode: string;
+  versionType: string;
 }
 
 export const useUserStore = defineStore({
@@ -42,10 +44,10 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getUserInfo(): UserInfo {
-      return this.userInfo || Storage.get(CURRENT_USER, '') || {}
+      return this.userInfo || Storage.get(KEY_CURRENT_USER, '') || {}
     },
     getToken(): string {
-      return this.token || Storage.get(ACCESS_TOKEN, '')
+      return this.token || Storage.get(KEY_ACCESS_TOKEN, '')
     },
     getLastUpdateTime(): number {
       return this.lastUpdateTime
@@ -54,21 +56,22 @@ export const useUserStore = defineStore({
   actions: {
     setToken(token: string | undefined) {
       this.token = token || ''
-      Storage.set(ACCESS_TOKEN, token)
+      Storage.set(KEY_ACCESS_TOKEN, token)
     },
-    setUserInfo(info: UserInfo | null) {
+    setUserInfo(info: any | null) {
       this.userInfo = info
       this.lastUpdateTime = new Date().getTime()
-      Storage.set(CURRENT_USER, info)
+      Storage.set(KEY_CURRENT_USER, info)
     },
 
     async Login(params: LoginParams) {
       try {
         const response = await login(params)
-        const { result, code } = response
+        const { data, code } = response
         if (code === ResultEnum.SUCCESS) {
           // save token
-          this.setToken(result.token)
+          this.setToken(data.token)
+          this.setUserInfo(data);
         }
         return Promise.resolve(response)
       }
@@ -101,8 +104,8 @@ export const useUserStore = defineStore({
       }
       this.setToken(undefined)
       this.setUserInfo(null)
-      Storage.remove(ACCESS_TOKEN)
-      Storage.remove(CURRENT_USER)
+      Storage.remove(KEY_ACCESS_TOKEN)
+      Storage.remove(KEY_CURRENT_USER)
       router.push(PageEnum.BASE_LOGIN)
       location.reload()
     },

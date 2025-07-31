@@ -31,6 +31,7 @@ export function getAppEnvConfig() {
     VITE_GLOB_UPLOAD_URL,
     VITE_GLOB_PROD_MOCK,
     VITE_GLOB_IMG_URL,
+    VITE_GLOB_API_VERSION,
   } = ENV
 
   if (!/^[a-zA-Z\_]*$/.test(VITE_GLOB_APP_SHORT_NAME)) {
@@ -48,6 +49,7 @@ export function getAppEnvConfig() {
     VITE_GLOB_UPLOAD_URL,
     VITE_GLOB_PROD_MOCK,
     VITE_GLOB_IMG_URL,
+    VITE_GLOB_API_VERSION,
   }
 }
 

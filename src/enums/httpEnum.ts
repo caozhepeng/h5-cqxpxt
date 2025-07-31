@@ -2,7 +2,7 @@
  * @description: 请求结果集
  */
 export enum ResultEnum {
-  SUCCESS = 200,
+  SUCCESS = 1,
   TOKEN_EXPIRED = 401,
   ERROR = 300,
   TIMEOUT = 10042,

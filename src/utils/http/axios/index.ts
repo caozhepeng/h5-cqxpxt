@@ -59,27 +59,27 @@ const transform: AxiosTransform = {
       throw new Error('请求出错，请稍候重试')
     }
     //  这里 code，result，message为 后台统一的字段，需要修改为项目自己的接口返回格式
-    const { code, result, message } = data
+    const { code, result, msg } = data
     // 请求成功
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS
     // 是否显示提示信息
     if (isShowMessage) {
       if (hasSuccess && (successMessageText || isShowSuccessMessage)) {
         showDialog({
-          message: successMessageText || message || '操作成功！',
+          message: successMessageText || msg || '操作成功！',
         }).then(() => {
           // on close
         })
       }
       else if (!hasSuccess && (errorMessageText || isShowErrorMessage)) {
         // 是否显示自定义信息提示
-        showFailToast(message || errorMessageText || '操作失败！')
+        showFailToast(msg || errorMessageText || '操作失败！')
       }
       else if (!hasSuccess && options.errorMessageMode === 'modal') {
         // errorMessageMode=‘custom-modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
         showDialog({
           title: '提示',
-          message,
+          message: msg,
         }).then(() => {
           // on close
         })
@@ -91,7 +91,7 @@ const transform: AxiosTransform = {
       return result
     }
     // 接口请求错误，统一提示错误信息 这里逻辑可以根据项目进行修改
-    let errorMsg = message
+    let errorMsg = msg
     const LoginName = PageEnum.BASE_LOGIN_NAME
     const LoginPath = PageEnum.BASE_LOGIN
     switch (code) {
@@ -109,12 +109,10 @@ const transform: AxiosTransform = {
         showDialog({
           title: '提示',
           message: '登录身份已失效，请重新登录!',
-        })
-          .then(() => {
+        }).then(() => {
             storage.clear()
             window.location.href = LoginPath
-          })
-          .catch(() => {
+          }).catch(() => {
             // on cancel
           })
         break
@@ -147,8 +145,7 @@ const transform: AxiosTransform = {
         config.url = `${config.url + params}${joinTimestamp(joinTime, true)}`
         config.params = undefined
       }
-    }
-    else {
+    } else {
       if (!isString(params)) {
         formatDate && formatRequestDate(params)
         if (
@@ -237,7 +234,7 @@ const transform: AxiosTransform = {
   },
 }
 
-function createAxios(opt?: Partial<CreateAxiosOptions>) {
+function createAxios(opt?: Partial<CreateAxiosOptions>) {  
   return new VAxios(
     deepMerge(
       {
@@ -247,8 +244,11 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         prefixUrl: urlPrefix,
 
         // 如果是json格式
-        headers: { 'Content-Type': ContentTypeEnum.JSON },
-        // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
+        // headers: { 'Content-Type': ContentTypeEnum.JSON },
+        headers: { 
+          'Content-Type': ContentTypeEnum.FORM_URLENCODED,
+          'version': globSetting.apiVersion,
+        },
 
         // 数据处理方式
         transform,

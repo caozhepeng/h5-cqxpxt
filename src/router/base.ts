@@ -18,7 +18,7 @@ export const ErrorPageRoute: RouteRecordRaw = {
       name: 'ErrorPageSon',
       component: () => import('@/views/exception/404.vue'),
       meta: {
-        title: 'ErrorPage',
+        title: '错误页',
         hideBreadcrumb: true,
       },
     },
@@ -35,8 +35,8 @@ export const RootRoute: RouteRecordRaw = {
 }
 
 export const LoginRoute: RouteRecordRaw = {
-  path: '/login',
-  name: 'Login',
+  path: PageEnum.BASE_LOGIN,
+  name: PageEnum.BASE_LOGIN_NAME,
   component: () => import('@/views/login/Login.vue'),
   meta: {
     title: '登录',

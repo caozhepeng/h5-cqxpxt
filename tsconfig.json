@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "lib": ["ESNext", "DOM"],
     "useDefineForClassFields": true,
+    // baseUrl 用来告诉编译器到哪里去查找模块，使用非相对模块时必须配置此项
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -14,7 +15,10 @@
     "resolveJsonModule": true,
     "typeRoots": ["./node_modules/@types/", "./types"],
     "types": ["vite/client"],
-    "strict": true,
+    // 允许 JS
+    "allowJs": true,
+    // TS 严格模式
+    "strict": false,
     "noImplicitAny": false,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
@@ -22,6 +26,7 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
+  // 需要被编译的文件列表
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
@@ -34,6 +39,7 @@
     "mock/**/*.ts",
     "vite.config.ts"
   ],
+  // 从编译中排除的文件列表
   "exclude": ["node_modules", "dist", "**/*.js"]
 }
 

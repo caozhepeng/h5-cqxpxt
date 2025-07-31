@@ -3,7 +3,7 @@ import { isNavigationFailure } from 'vue-router'
 import NProgress from 'nprogress'
 import { useRouteStoreWidthOut } from '@/store/modules/route'
 import { useUserStoreWidthOut } from '@/store/modules/user'
-import { ACCESS_TOKEN } from '@/store/mutation-types'
+import { KEY_ACCESS_TOKEN } from '@/store/mutation-types'
 import { storage } from '@/utils/Storage'
 import { PageEnum } from '@/enums/pageEnum'
 import 'nprogress/nprogress.css'
@@ -32,7 +32,7 @@ export function createRouterGuards(router: Router) {
       return
     }
 
-    const token = storage.get(ACCESS_TOKEN)
+    const token = storage.get(KEY_ACCESS_TOKEN)
 
     if (!token) {
       // redirect login page
@@ -41,15 +41,15 @@ export function createRouterGuards(router: Router) {
     }
 
     // 当上次更新时间为空时获取用户信息
-    if (userStore.getLastUpdateTime === 0) {
-      try {
-        await userStore.GetUserInfo()
-      }
-      catch (err) {
-        next()
-        return
-      }
-    }
+    // if (userStore.getLastUpdateTime === 0) {
+    //   try {
+    //     await userStore.GetUserInfo()
+    //   }
+    //   catch (err) {
+    //     next()
+    //     return
+    //   }
+    // }
 
     next()
   })

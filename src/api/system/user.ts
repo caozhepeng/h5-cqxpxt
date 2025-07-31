@@ -1,4 +1,9 @@
 import { http } from '@/utils/http/axios'
+import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum'
+
+enum Api {
+  api_login = '/login',
+}
 
 export interface BasicResponseModel<T = any> {
   code: number
@@ -10,10 +15,10 @@ export interface BasicResponseModel<T = any> {
  * @description: 用户登录
  */
 export function login(params: any) {
-  return http.request<BasicResponseModel>(
+  return http.request(
     {
-      url: '/login',
-      method: 'POST',
+      url: Api.api_login,
+      method: RequestEnum.POST,
       params,
     },
     {

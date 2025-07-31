@@ -7,6 +7,7 @@ export interface GlobConfig {
   uploadUrl?: string
   prodMock: boolean
   imgUrl?: string
+  apiVersion: string
 }
 
 export interface GlobEnvConfig {
@@ -26,4 +27,6 @@ export interface GlobEnvConfig {
   VITE_GLOB_IMG_URL?: string
   // 生产环境开启mock
   VITE_GLOB_PROD_MOCK: boolean
+  /** 请求接口header需要的的版本号 */
+  VITE_GLOB_API_VERSION: string
 }

@@ -12,6 +12,7 @@ export function useGlobSetting(): Readonly<GlobConfig> {
     VITE_GLOB_UPLOAD_URL,
     VITE_GLOB_PROD_MOCK,
     VITE_GLOB_IMG_URL,
+    VITE_GLOB_API_VERSION,
   } = getAppEnvConfig()
 
   if (!/[a-zA-Z\_]*/.test(VITE_GLOB_APP_SHORT_NAME)) {
@@ -30,6 +31,7 @@ export function useGlobSetting(): Readonly<GlobConfig> {
     uploadUrl: VITE_GLOB_UPLOAD_URL,
     prodMock: VITE_GLOB_PROD_MOCK,
     imgUrl: VITE_GLOB_IMG_URL,
+    apiVersion: VITE_GLOB_API_VERSION,
   }
   return glob as Readonly<GlobConfig>
 }

@@ -30,6 +30,7 @@ html.light {
 
   body {
     background-color: #fcfbfe;
+    background-color: #121212;
     color: var(--van-gray-8) !important;
   }
 }
@@ -104,4 +105,19 @@ html.dark {
     backdrop-filter: blur(10px);
     background: rgba(30, 30, 30, 70%);
   }
+}
+
+
+.safe-area-padding-bottom {
+    /* 兼容 IOS<11.2   */
+    padding-bottom: calc(constant(safe-area-inset-bottom));
+    /* 兼容 IOS>11.2 */
+    padding-bottom: calc(env(safe-area-inset-bottom));
+}
+
+.safe-area-margin-bottom {
+    /* 兼容 IOS<11.2   */
+    margin-bottom: calc(constant(safe-area-inset-bottom));
+    /* 兼容 IOS>11.2 */
+    margin-bottom: calc(env(safe-area-inset-bottom));
 }

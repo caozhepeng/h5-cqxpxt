@@ -1,14 +1,14 @@
 <template>
   <div class="page-container flex flex-col justify-center">
-    <div class="text-center">
+    <!-- <div class="text-center">
       <img src="~@/assets/icons/exception/404.svg" alt="">
-    </div>
+    </div> -->
     <div class="text-center">
       <p class="m-4 text-base">
         抱歉，你访问的页面不存在
       </p>
-      <van-button type="primary" @click="goHome">
-        回到首页
+      <van-button type="primary" @click="onBack">
+        返回
       </van-button>
     </div>
   </div>
@@ -16,8 +16,11 @@
 
 <script lang="ts" setup>
 const router = useRouter()
-function goHome() {
-  router.push('/')
+function onBack() {
+  if (window.history.state.back)
+    history.back()
+  else
+    router.replace('/')
 }
 </script>
 
