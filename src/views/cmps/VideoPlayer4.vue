@@ -6,7 +6,6 @@
             ref="refVideo" width="100%" 
             :controls="true" :autoplay="true" :loop="false"
             @timeupdate="onTimeupdate" @ended="onEnded" class="video-js"  >
-            
         </video>
 <!-- 
         <div style="margin: 20px; width: 100px; height: 40px; background-color: goldenrod;">
@@ -56,17 +55,10 @@ const testvalue = ref(0);
 
 /** 当目前的播放位置已更改时 */
 const onTimeupdate = () => {
-    console.log('-----------');
-    return
-    if (count < 10) {
-        showToast(count + '');
-    } else {
-        // if (refVideo.value.played) {
-        //     refVideo.value.pause();
-        //     toggleFullscreen();
-        // }
-        // count = 0;
-    }
+    // if (refVideo.value.played) {
+    //     refVideo.value.pause();
+    //     toggleFullscreen();
+    // }
     testvalue.value += 1;
         // 设置倍速为1，使其设置倍速失效
         if (refVideo.value.playbackRate > 1) {
@@ -101,12 +93,7 @@ const toggleFullscreen = () => {
 };
 
 
-const onTimeupdateWithVideoJs = () => {
-    console.log('player.currentTime---:', player.currentTime());
-    
-    if (count < 2) {
-        showToast('22222222222222');
-    }
+const onTimeupdateWithVideoJs = () => {    
     testvalue.value += 1;
     // 设置倍速为1，使其设置倍速失效
     // if (refVideo.value.playbackRate > 1) {
@@ -123,10 +110,7 @@ const onTimeupdateWithVideoJs = () => {
 
 const onEnded = () => {
     lastValidTime = 0
-    console.log('0000000000jieshu');
-    
-    alert('1');
-            // emit('currentVideoPlayEnd');
+    // emit('currentVideoPlayEnd');
     currentVideoPlayEnd();
 }
 
@@ -147,7 +131,7 @@ const initVedioPlayer = () => {
             progressControl: { // 禁用进度条交互
               seekBar: true
             },
-
+            fullscreenToggle: false,
             // 音量竖着空字，移动端可能无效
             volumePanel: {
                 inline: false,
@@ -207,7 +191,7 @@ const initVedioPlayer = () => {
     // });
 }
 onMounted(() => {
-    // initVedioPlayer();
+    initVedioPlayer();
     //  refVideo.value.addEventListener('timeupdate', () => {
     // });
 
